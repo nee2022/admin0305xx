@@ -10,14 +10,11 @@
           <el-form-item label="套餐名字:">
             <el-input v-model="a" class="addinput"></el-input>
           </el-form-item>
-          <el-form-item label="金额:">
+          <el-form-item label="支付金额:">
             <el-input v-model="b" class="addinput"></el-input>
           </el-form-item>
-          <el-form-item label="时长:">
+          <el-form-item label="金额:">
             <el-input v-model="c" class="addinput"></el-input>
-          </el-form-item>
-          <el-form-item label="电量:">
-            <el-input v-model="energyC" class="addinput"></el-input>
           </el-form-item>
 
           <el-form-item label="类型:">
@@ -103,7 +100,7 @@
         </div>
         <template>
           <el-table :data="parkList" stripe style="width: 100%">
-            <el-table-column prop="name" label="套餐名1"> </el-table-column>
+            <el-table-column prop="name" label="套餐名"> </el-table-column>
             <el-table-column prop="pay" label="金额"> </el-table-column>
             <el-table-column prop="duration" label="时长"> </el-table-column>
             <el-table-column prop="energy" label="电量"> </el-table-column>
@@ -164,13 +161,11 @@ export default {
   components: { myhead, headMsg },
   data() {
     return {
-      stationOrCharger: "",
       lest_id: "",
       value: "",
       a: "",
       b: "",
       c: "",
-      energyC: "",
       d: "",
       name: "",
       stations: false,
@@ -298,19 +293,25 @@ export default {
         this.value = 3;
       }
       if (this.lest_id) {
-        let url = `/admin/api/package/${this.lest_id}?token=${this.token}&name=${this.a}&pay=${this.b}&duration=${this.c}&energy=${this.energyC}&type=${this.value}`;
-        console.log("putUrl");
-        console.log(url);
-        this.$axios.put(url).then(res => {
-          if (res.data.error == 0) {
-            this.$message.success("修改套餐成功");
-            setTimeout(() => {
-              this.getParksMes();
-            }, 1000);
-          } else {
-            this.$message.success("修改套餐失败");
-          }
-        });
+        this.$axios
+          .put(`/admin/api/package/${this.lest_id}`, {
+            token: this.token,
+            name: this.a,
+            pay: this.b,
+            amount: this.c,
+            type: this.value,
+            station: this.stationsxi
+          })
+          .then(res => {
+            if (res.data.error == 0) {
+              this.$message.success("修改套餐成功");
+              setTimeout(() => {
+                this.getParksMes();
+              }, 1000);
+            } else {
+              this.$message.success("修改套餐失败");
+            }
+          });
         this.lest_id = "";
         this.a = "";
         this.b = "";
@@ -320,22 +321,18 @@ export default {
       } else {
         this.name = "添加套餐";
         let url =
-          "/admin/api/station/" +
-          this.stationsId +
-          "/package?token=" +
+          "/admin/api/package?token=" +
           this.token +
           "&name=" +
           this.a +
           "&pay=" +
           this.b +
-          "&duration=" +
+          "&amount=" +
           this.c +
-          "&energy=" +
-          this.energyC +
           "&type=" +
-          this.value;
-        console.log("url");
-        console.log(url);
+          this.value +
+          "&station=" +
+          this.stationsxi;
         this.$axios.post(url).then(res => {
           if (res.data.error == 0) {
             this.$message.success("添加套餐成功");
@@ -350,21 +347,21 @@ export default {
         this.b = "";
         this.c = "";
         this.d = "";
-        this.energyC = "";
         this.value = "时间";
       }
     },
     getParksMes() {
       let toKen = this.token.replace(/\"/g, "");
-      let url = `admin/api/station/${this.stationsId}/packages?token=${toKen}&page=${this.newpark}&row=8`;
-      console.log("getUrl");
-      console.log(url);
-      this.$axios.get(url).then(res => {
-        if (res.status == 200) {
-          this.parkList = res.data.packages; //用户列表数据
-          this.parkTotal = res.data.packages.length;
-        }
-      });
+      this.$axios
+        .get(
+          `admin/api/station/${this.stationsId}/packages?token=${toKen}&page=${this.newpark}&charger=${this.package}&row=8&package=${this.package}`
+        )
+        .then(res => {
+          if (res.status == 200) {
+            this.parkList = res.data.packages; //用户列表数据
+            this.parkTotal = res.data.packages.length;
+          }
+        });
     },
     handleCurrentChange(newPage) {
       this.pagenum = newPage;
