@@ -209,7 +209,8 @@ export default {
         token: localStorage.getItem("token").replace(/\"/g, ""),
         // name: '',
         pay: "",
-        duration: ""
+        duration: "",
+        source: "qr"
       }, //添加设备添加数据
       addFormRules: {
         // name: [{
