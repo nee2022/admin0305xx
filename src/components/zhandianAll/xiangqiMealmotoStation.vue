@@ -103,7 +103,7 @@
         </div>
         <template>
           <el-table :data="parkList" stripe style="width: 100%">
-            <el-table-column prop="name" label="套餐名1"> </el-table-column>
+            <el-table-column prop="name" label="套餐名"> </el-table-column>
             <el-table-column prop="pay" label="金额"> </el-table-column>
             <el-table-column prop="duration" label="时长"> </el-table-column>
             <el-table-column prop="energy" label="电量"> </el-table-column>

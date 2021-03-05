@@ -103,7 +103,7 @@
         </div>
         <template>
           <el-table :data="parkList" stripe style="width: 100%">
-            <el-table-column prop="name" label="套餐名1"> </el-table-column>
+            <el-table-column prop="name" label="套餐名"> </el-table-column>
             <el-table-column prop="pay" label="金额"> </el-table-column>
             <el-table-column prop="duration" label="时长"> </el-table-column>
             <el-table-column prop="energy" label="电量"> </el-table-column>
@@ -183,7 +183,7 @@ export default {
       newpark: 1, //分页
       tableData: [],
       parkList: [],
-      stationsId: "",
+      chargerId: "",
       types: [
         "系统",
         "管理员",
@@ -232,9 +232,9 @@ export default {
     };
   },
   created() {
-    this.stationsId = this.$store.state.id;
+    this.chargerId = this.$store.state.id;
     console.log("this.stationId");
-    console.log(this.stationsId);
+    console.log(this.chargerId);
     this.stationsxi = this.$store.state.xitong;
     this.stationsName = this.$store.state.name;
     this.getParksMes();
@@ -319,8 +319,8 @@ export default {
       } else {
         this.name = "添加套餐";
         let url =
-          "/admin/api/station/" +
-          this.stationsId +
+          "/admin/api/charger/" +
+          this.chargerId +
           "/package?token=" +
           this.token +
           "&name=" +
@@ -355,7 +355,7 @@ export default {
     },
     getParksMes() {
       let toKen = this.token.replace(/\"/g, "");
-      let url = `admin/api/station/${this.stationsId}/packages?token=${toKen}&page=${this.newpark}&row=8`;
+      let url = `admin/api/charger/${this.chargerId}/packages?token=${toKen}&page=${this.newpark}&row=8`;
       console.log("getUrl");
       console.log(url);
       this.$axios.get(url).then(res => {
