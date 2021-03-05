@@ -32,7 +32,7 @@
         <span slot="footer" class="dialog-footer">
           <el-button @click="stations = false">取 消</el-button>
           <el-button type="primary" @click="(stations = false), add()"
-            >确 定</el-button
+            >确定</el-button
           >
         </span>
       </el-dialog>
@@ -100,12 +100,16 @@
         </div>
         <template>
           <el-table :data="parkList" stripe style="width: 100%">
-            <el-table-column prop="name" label="用户名"> </el-table-column>
-            <el-table-column prop="pay" label="支付金额"> </el-table-column>
-            <el-table-column prop="plate" label="车牌"> </el-table-column>
-            <el-table-column prop="duration" label="时间"> </el-table-column>
+            <el-table-column prop="name" label="套餐名"> </el-table-column>
+            <el-table-column prop="pay" label="金额"> </el-table-column>
+            <el-table-column prop="duration" label="时长"> </el-table-column>
             <el-table-column prop="energy" label="电量"> </el-table-column>
-            <el-table-column prop="address" label="操作" width="200" v-if="this.package === 1">
+            <el-table-column
+              prop="address"
+              label="操作"
+              width="200"
+              v-if="this.package === 1"
+            >
               <template slot-scope="scope">
                 <div class="operation">
                   <div>
@@ -187,53 +191,52 @@ export default {
         "高位视频",
         "低位视频",
         "巡检车",
-        "合作方",
+        "合作方"
       ],
       options: [
         {
           value: "选项1",
-          label: "金额",
+          label: "金额"
         },
         {
           value: "选项2",
-          label: "电能",
+          label: "电能"
         },
         {
           value: "选项3",
-          label: "时间",
-        },
+          label: "时间"
+        }
       ],
       op: [
         {
           value: "选项1",
-          label: "系统级",
+          label: "系统级"
         },
         {
           value: "选项2",
-          label: "站点级",
+          label: "站点级"
         },
         {
           value: "选项3",
-          label: "设备级",
-        },
+          label: "设备级"
+        }
       ],
       value: "",
       values: "",
       package: 1,
-      stationsxi:1,
+      stationsxi: 1
     };
   },
   created() {
     this.stationsId = this.$store.state.id;
+    console.log("this.stationId");
+    console.log(this.stationsId);
     this.stationsxi = this.$store.state.xitong;
     this.stationsName = this.$store.state.name;
-    console.log(this.stationsxi);
     this.getParksMes();
   },
   methods: {
-    
     async removetapcanByID(id) {
-      console.log(id);
       let toKen = this.token.replace(/\"/g, "");
       const confirmRes = await this.$confirm(
         "此操作将永久删除该套餐, 是否继续?",
@@ -241,16 +244,15 @@ export default {
         {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
-          type: "warning",
+          type: "warning"
         }
-      ).catch((err) => err);
+      ).catch(err => err);
       if (confirmRes !== "confirm") {
         return this.$message.info("已取消删除");
       }
       this.$axios
         .delete("/admin/api/package/" + id + "?token=" + toKen)
-        .then((res) => {
-          console.log(res);
+        .then(res => {
           if (res.status == 200) {
             this.$message.success("删除成功");
             setTimeout(() => {
@@ -272,8 +274,6 @@ export default {
       } else {
         this.package = 2;
       }
-      console.log(this.package);
-      console.log(this.values);
       this.getParksMes();
     },
     names() {
@@ -292,9 +292,7 @@ export default {
       } else {
         this.value = 3;
       }
-      console.log(this.stationsxi);
       if (this.lest_id) {
-        console.log("输出的是id");
         this.$axios
           .put(`/admin/api/package/${this.lest_id}`, {
             token: this.token,
@@ -302,10 +300,9 @@ export default {
             pay: this.b,
             amount: this.c,
             type: this.value,
-            station: this.stationsxi,
+            station: this.stationsxi
           })
-          .then((res) => {
-            console.log(res);
+          .then(res => {
             if (res.data.error == 0) {
               this.$message.success("修改套餐成功");
               setTimeout(() => {
@@ -323,31 +320,31 @@ export default {
         this.value = "时间";
       } else {
         this.name = "添加套餐";
-        console.log("输出的是添加");
-      console.log(this.stationsxi);
-
-
-        this.$axios
-          .post("/admin/api/package", {
-            token: this.token,
-            name: this.a,
-            pay: this.b,
-            amount: this.c,
-            type: this.value,
-            station: this.stationsxi,
-          })
-          .then((res) => {
-            console.log(res);
-            if (res.data.error == 0) {
-              this.$message.success("添加套餐成功");
-                           setTimeout(() => {
-                this.getParksMes();
-              }, 1000);
-            } else {
-              this.$message.success("添加套餐失败");
-            }
-            console.log(res.data.error);
-          });
+        let url =
+          "/admin/api/package?token=" +
+          this.token +
+          "&name=" +
+          this.a +
+          "&pay=" +
+          this.b +
+          "&amount=" +
+          this.c +
+          "&type=" +
+          this.value +
+          "&station=" +
+          this.stationsxi;
+        console.log("url");
+        console.log(url);
+        this.$axios.post(url).then(res => {
+          if (res.data.error == 0) {
+            this.$message.success("添加套餐成功");
+            setTimeout(() => {
+              this.getParksMes();
+            }, 1000);
+          } else {
+            this.$message.success("添加套餐失败");
+          }
+        });
         this.a = "";
         this.b = "";
         this.c = "";
@@ -361,27 +358,22 @@ export default {
         .get(
           `admin/api/station/${this.stationsId}/packages?token=${toKen}&page=${this.newpark}&charger=${this.package}&row=8&package=${this.package}`
         )
-        .then((res) => {
-          console.log(res);
-          // console.log(res.data.users)
-          // console.log(res.status)//打印状态码
+        .then(res => {
           if (res.status == 200) {
             this.parkList = res.data.packages; //用户列表数据
             this.parkTotal = res.data.packages.length;
-            //   console.log(this.parkList);
           }
         });
     },
     handleCurrentChange(newPage) {
-      //console.log(newPage)
       this.pagenum = newPage;
       this.getRoadMes();
     },
     parksNumber(parknum) {
       this.newpark = parknum;
       this.getParksMes();
-    },
-  },
+    }
+  }
 };
 </script>
 
