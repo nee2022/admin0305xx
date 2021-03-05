@@ -175,7 +175,7 @@
 									<div>
 										<el-button type="text"  @click="(dialogVisible = true), id(scope.row.id)"><img src="../../assets/images/compile.png" /></el-button>
 									</div>
-                                                         <router-link to="/basicmotoCharger">
+                                                         <router-link to="/chargersmoto">
                       <div @click="huodeid(scope.row.id,scope.row.name,scope.row.type,scope.row.address,scope.row.memo,scope.row.lot_rate_group,scope.row.rate_group,kong)">
 												<img style="height:14px;width:19px" src="../../assets/images/see.png">
 											</div>

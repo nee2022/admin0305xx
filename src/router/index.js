@@ -77,6 +77,7 @@ import shebeiParkingRecords from "../components/shebeiXinxi/shebeiParkingRecords
 import shebeiHistory from "../components/shebeiXinxi/shebeiHistory.vue";
 import stations from "../pages/stations";
 import stationsmoto from "../pages/stationsmoto";
+import chargersmoto from "../pages/chargersmoto";
 import vehicleDetectSystem from "../pages/vehicleDetectSystem/vehicleDetectSystem"; //本周增加模块
 import smartCommunity from "../pages/smartCommunity/smartCommunity"; //本周增加模块
 import smartPark from "../pages/smartPark/smartPark"; //本周增加模块
@@ -1017,7 +1018,7 @@ export default new Router({
       ],
       redirect: "/basic"
     },
-    //电单车充电
+    //电单车充电站点详情
     {
       path: "/stationsmoto",
       component: stationsmoto,
@@ -1036,6 +1037,26 @@ export default new Router({
         }
       ],
       redirect: "/basicmotoStation"
+    },
+    //电单车充电设备详情
+    {
+      path: "/chargersmoto",
+      component: chargersmoto,
+      children: [
+        {
+          path: "/basicmotoCharger",
+          component: basicmotoCharger
+        },
+        {
+          path: "/chargingRecordmotoCharger",
+          component: chargingRecordmotoCharger
+        },
+        {
+          path: "/xiangqiMealmotoCharger",
+          component: xiangqiMealmotoCharger
+        }
+      ],
+      redirect: "/basicmotoCharger"
     },
     //个人中心
     {
