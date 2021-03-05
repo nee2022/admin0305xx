@@ -164,7 +164,6 @@ export default {
   components: { myhead, headMsg },
   data() {
     return {
-      stationOrCharger: "",
       lest_id: "",
       value: "",
       a: "",

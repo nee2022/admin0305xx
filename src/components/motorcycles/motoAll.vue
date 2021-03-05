@@ -104,7 +104,7 @@
 												<img src="../../assets/images/shan2.png">
 											</div>
                                            <router-link to="/stationsmoto">
-                      <div @click="huodeid(scope.row.id,scope.row.name,scope.row.type,scope.row.address,scope.row.memo,scope.row.lot_rate_group,scope.row.rate_group)">
+                      <div @click="getStationId(scope.row.id,scope.row.name,scope.row.type,scope.row.address,scope.row.memo,scope.row.lot_rate_group,scope.row.rate_group)">
 												<img src="../../assets/images/lan.png">
 											</div>
                       </router-link>
@@ -176,7 +176,7 @@
 										<el-button type="text"  @click="(dialogVisible = true), id(scope.row.id)"><img src="../../assets/images/compile.png" /></el-button>
 									</div>
                                                          <router-link to="/chargersmoto">
-                      <div @click="huodeid(scope.row.id,scope.row.name,scope.row.type,scope.row.address,scope.row.memo,scope.row.lot_rate_group,scope.row.rate_group,kong)">
+                      <div @click="getChargerId(scope.row.id,scope.row.name,scope.row.type,scope.row.address,scope.row.memo,scope.row.lot_rate_group,scope.row.rate_group,kong)">
 												<img style="height:14px;width:19px" src="../../assets/images/see.png">
 											</div>
                       </router-link>
@@ -497,7 +497,26 @@ export default {
     }, 1000);
   },
   methods: {
-        huodeid(id, name, type, address, memo, lot_rate_group, rate_group,kong) {
+        getStationId(id, name, type, address, memo, lot_rate_group, rate_group,kong) {
+      if(kong == 1){
+        console.log('you');
+        console.log(kong);
+      }if (!kong ==1){
+        console.log('zuo');
+        console.log(kong);
+      }
+      this.$store.commit("changeId", { 
+        chanId: id,
+        name: name,
+        type: type,
+        address: address,
+        memo: memo,
+        lot_rate_group: lot_rate_group,
+        rate_group: rate_group,
+        kong:kong,
+      });
+    },
+        getChargerId(id, name, type, address, memo, lot_rate_group, rate_group,kong) {
       if(kong == 1){
         console.log('you');
         console.log(kong);
