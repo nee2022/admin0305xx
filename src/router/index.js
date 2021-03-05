@@ -55,8 +55,12 @@ import carsWhite from "../components/zhandianAll/carsWhite.vue";
 import basic from "../components/zhandianAll/basic.vue";
 import chargingRecordmotoStation from "../components/zhandianAll/chargingRecordmotoStation.vue";
 import xiangqiMealmotoStation from "../components/zhandianAll/xiangqiMealmotoStation.vue";
-
 import basicmotoStation from "../components/zhandianAll/basicmotoStation.vue";
+
+import chargingRecordmotoCharger from "../components/zhandianAll/chargingRecordmotoCharger.vue";
+import xiangqiMealmotoCharger from "../components/zhandianAll/xiangqiMealmotoCharger.vue";
+import basicmotoCharger from "../components/zhandianAll/basicmotoCharger.vue";
+
 import chargingRate from "../components/zhandianAll/chargingRate.vue";
 import stopRate from "../components/zhandianAll/stopRate.vue";
 import parkingRecords from "../components/zhandianAll/parkingRecords.vue";
